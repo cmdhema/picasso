@@ -71,6 +71,10 @@ function install_docker {
         install_package socat dnsmasq
     fi
 
+    if is_ubuntu ; then
+        UBUNTU_RELEASE_BASE_NUM=`lsb_release -r | awk '{print $2}' | cut -d '.' -f 1`
+    fi
+
     if is_ubuntu && [ $UBUNTU_RELEASE_BASE_NUM -le 14 ]; then
         sudo service docker start || true
     else
@@ -221,10 +225,10 @@ if is_service_enabled functions; then
 
     if [[ "$1" == "stack" && "$2" == "install" ]]; then
         echo_summary "Installing Functions"
-        install_docker
-        install_go_1.7.1
+#        install_docker
+#        install_go_1.7.1
         is_glide_installed
-        install_functions
+#        install_functions
         install_picasso
         install_python_picassoclient
     elif [[ "$1" == "stack" && "$2" == "post-config" ]]; then
